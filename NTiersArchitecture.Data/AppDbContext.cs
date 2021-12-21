@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NTiersArchitecture.Core.Entity;
+using NTiersArchitecture.Data.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,8 @@ namespace NTiersArchitecture.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         }
     }
 }
