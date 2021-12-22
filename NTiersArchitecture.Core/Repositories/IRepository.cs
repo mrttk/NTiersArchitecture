@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,7 +11,7 @@ namespace NTiersArchitecture.Core.Repositories
     {
         Task<TEntity> GetByIdAsync(int id);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+        IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         Task AddAsync(TEntity entity);
