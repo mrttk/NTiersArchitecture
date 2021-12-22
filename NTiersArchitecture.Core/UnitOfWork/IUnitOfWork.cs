@@ -1,4 +1,5 @@
-﻿using NTiersArchitecture.Core.Services;
+﻿using NTiersArchitecture.Core.Repositories;
+using NTiersArchitecture.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,8 @@ namespace NTiersArchitecture.Core.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        IProductService Products { get; }
-        ICategoryService Categories { get; }
+        IProductRepository Products { get; }
+        ICategoryRepository Categories { get; }
 
         Task CommitAsync();
         void Commit();
