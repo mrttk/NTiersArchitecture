@@ -41,6 +41,7 @@ namespace NTiersArchitecture.API
                             opt.MigrationsAssembly("NTiersArchitecture.Data");
                         });
             });
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
