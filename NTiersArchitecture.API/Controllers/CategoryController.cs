@@ -51,5 +51,15 @@ namespace APINew.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+
+        public IActionResult Remove(int id)
+        {
+            var category = _categoryService.GetByIdAsync(id).Result;
+            _categoryService.Remove(category);
+
+            return NoContent();
+        }
     }
 }
