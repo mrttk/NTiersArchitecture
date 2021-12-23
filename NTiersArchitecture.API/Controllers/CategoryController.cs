@@ -37,6 +37,14 @@ namespace APINew.Controllers
             return Ok(_mapper.Map<CategoryDto>(category));
         }
 
+        [HttpGet("{id}/products")]
+        public async Task<IActionResult> GetProductsWithCategoryId(int id)
+        {
+            var productsWithById = await _categoryService.GetWithProductByIdAsync(id);
+
+            return Ok(_mapper.Map<CategoryWithProductsDto>(productsWithById));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Save(CategoryDto categoryDto)
         {
@@ -53,7 +61,6 @@ namespace APINew.Controllers
         }
 
         [HttpDelete("{id}")]
-
         public IActionResult Remove(int id)
         {
             var category = _categoryService.GetByIdAsync(id).Result;
