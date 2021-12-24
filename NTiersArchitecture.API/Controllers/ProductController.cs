@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NTiersArchitecture.API.DTOs;
+using NTiersArchitecture.Core.Entity;
 using NTiersArchitecture.Core.Services;
 using System;
 using System.Collections.Generic;
@@ -39,5 +40,36 @@ namespace NTiersArchitecture.API.Controllers
             return Ok(_mapper.Map<ProductDto>(product));
         }
 
+        [HttpGet("{id}/category")]
+        public async Task<IActionResult> GetProductWithCategoryId(int id)
+        {
+            var product = await _productService.GetWithCategoryByIdAsync(id);
+
+            return Ok(_mapper.Map<ProductWithCategoryDto>(product));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(ProductDto productDto)
+        {
+            var createdProduct = await _productService.AddAsync(_mapper.Map<Product>(productDto));
+
+            return Created(string.Empty, _mapper.Map<ProductDto>(createdProduct));
+        }
+
+        [HttpPut]
+        public IActionResult Update(ProductDto productDto)
+        {
+            _productService.Update(_mapper.Map<Product>(productDto));
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Remove(int id)
+        {
+            var product = _productService.GetByIdAsync(id).Result;
+            _productService.Remove(product);
+
+            return NoContent();
+        }
     }
 }
