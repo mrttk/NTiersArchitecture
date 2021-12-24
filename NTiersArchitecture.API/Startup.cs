@@ -29,7 +29,11 @@ namespace NTiersArchitecture.API
         {
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(Configuration["ConnectionStrings:SqlServerConnection"].ToString());
+                options.UseSqlServer(Configuration["ConnectionStrings:SqlServerConnection"].ToString(),
+                        opt =>
+                        {
+                            opt.MigrationsAssembly("NTiersArchitecture.Data");
+                        });
             });
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
