@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NTiersArchitecture.API.DTOs;
+using NTiersArchitecture.API.Filters;
 using NTiersArchitecture.Core.Entity;
 using NTiersArchitecture.Core.Services;
 using System;
@@ -47,7 +48,7 @@ namespace NTiersArchitecture.API.Controllers
 
             return Ok(_mapper.Map<ProductWithCategoryDto>(product));
         }
-
+        [ValidationFilter]
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {
