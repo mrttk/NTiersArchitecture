@@ -33,6 +33,7 @@ namespace NTiersArchitecture.API.Controllers
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -41,6 +42,7 @@ namespace NTiersArchitecture.API.Controllers
             return Ok(_mapper.Map<ProductDto>(product));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpGet("{id}/category")]
         public async Task<IActionResult> GetProductWithCategoryId(int id)
         {
@@ -64,6 +66,7 @@ namespace NTiersArchitecture.API.Controllers
             return NoContent();
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {

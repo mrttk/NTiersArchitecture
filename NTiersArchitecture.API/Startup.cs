@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NTiersArchitecture.API.Filters;
 using NTiersArchitecture.Core.Repositories;
 using NTiersArchitecture.Core.Services;
 using NTiersArchitecture.Core.UnitOfWork;
@@ -42,6 +43,8 @@ namespace NTiersArchitecture.API
                         });
             });
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped<NotFoundFilter>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
