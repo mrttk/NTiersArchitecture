@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using NTiersArchitecture.API.DTOs;
+using NTiersArchitecture.API.Filters;
 using NTiersArchitecture.Core.Repositories;
 using NTiersArchitecture.Core.Services;
 using NTiersArchitecture.Core.UnitOfWork;
@@ -18,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NTiersArchitecture.API.Extensions;
 
 namespace NTiersArchitecture.API
 {
@@ -43,6 +49,8 @@ namespace NTiersArchitecture.API
             });
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddScoped<NotFoundFilter>();
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
 
@@ -51,6 +59,10 @@ namespace NTiersArchitecture.API
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +73,7 @@ namespace NTiersArchitecture.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            app.UseCustomException();
 
             app.UseRouting();
 
