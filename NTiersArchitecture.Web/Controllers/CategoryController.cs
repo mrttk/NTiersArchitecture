@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NTiersArchitecture.Web.DTOs;
-using NTiersArchitecture.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NTiersArchitecture.Core.Entity;
+using NTiersArchitecture.Core.Services;
 
 namespace NTiersArchitecture.Web.Controllers
 {
@@ -36,6 +36,21 @@ namespace NTiersArchitecture.Web.Controllers
         public async Task<IActionResult> Create(CategoryDto categoryDto)
         {
             await _categoryService.AddAsync(_mapper.Map<Category>(categoryDto));
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var category = await _categoryService.GetByIdAsync(id);
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Update(CategoryDto categoryDto)
+        {
+            _categoryService.Update(_mapper.Map<Category>(categoryDto));
+
             return RedirectToAction("Index");
         }
     }
