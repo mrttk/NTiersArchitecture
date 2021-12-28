@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NTiersArchitecture.Core.Entity;
 using NTiersArchitecture.Core.Services;
+using NTiersArchitecture.Web.Filters;
 
 namespace NTiersArchitecture.Web.Controllers
 {
@@ -39,6 +40,7 @@ namespace NTiersArchitecture.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [ServiceFilter(typeof(CategoryNotFoundFilter))]
         public async Task<IActionResult> Update(int id)
         {
             var category = await _categoryService.GetByIdAsync(id);
@@ -54,6 +56,7 @@ namespace NTiersArchitecture.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [ServiceFilter(typeof(CategoryNotFoundFilter))]
         public IActionResult Delete(int id)
         {
             var category = _categoryService.GetByIdAsync(id).Result;
