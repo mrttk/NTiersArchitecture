@@ -39,7 +39,7 @@ namespace NTiersArchitecture.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryDto categoryDto)
         {
-            await _categoryService.AddAsync(_mapper.Map<Category>(categoryDto));
+            await _categoryApiService.AddAsync(categoryDto);
             return RedirectToAction("Index");
         }
 
