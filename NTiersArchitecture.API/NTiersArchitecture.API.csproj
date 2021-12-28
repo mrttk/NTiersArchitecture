@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NTiersArchitecture.Core\NTiersArchitecture.Core.csproj" />
-    <ProjectReference Include="..\NTiersArchitecture.Data\NTiersArchitecture.Data.csproj" />
     <ProjectReference Include="..\NTiersArchitecture.Service\NTiersArchitecture.Service.csproj" />
   </ItemGroup>
 
