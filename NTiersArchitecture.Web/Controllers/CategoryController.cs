@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NTiersArchitecture.Core.Entity;
 
 namespace NTiersArchitecture.Web.Controllers
 {
@@ -23,6 +24,19 @@ namespace NTiersArchitecture.Web.Controllers
         {
             var categories = await _categoryService.GetAllAsync();
             return View(_mapper.Map<IEnumerable<CategoryDto>>(categories));
+        }
+
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryDto categoryDto)
+        {
+            await _categoryService.AddAsync(_mapper.Map<Category>(categoryDto));
+            return RedirectToAction("Index");
         }
     }
 }
