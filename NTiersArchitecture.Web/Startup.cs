@@ -14,6 +14,7 @@ using NTiersArchitecture.Data;
 using NTiersArchitecture.Data.Repositories;
 using NTiersArchitecture.Data.UnitOfWorks;
 using NTiersArchitecture.Service.Services;
+using NTiersArchitecture.Web.ApiServices;
 using NTiersArchitecture.Web.Filters;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,10 @@ namespace NTiersArchitecture.Web
                         {
                             opt.MigrationsAssembly("NTiersArchitecture.Data");
                         });
+            });
+
+            services.AddHttpClient<CategoryApiService>(options => {
+                options.BaseAddress = new Uri(Configuration["baseUrl"]);
             });
 
             services.AddAutoMapper(typeof(Startup));
