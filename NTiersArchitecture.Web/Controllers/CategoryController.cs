@@ -8,22 +8,25 @@ using System.Threading.Tasks;
 using NTiersArchitecture.Core.Entity;
 using NTiersArchitecture.Core.Services;
 using NTiersArchitecture.Web.Filters;
+using NTiersArchitecture.Web.ApiServices;
 
 namespace NTiersArchitecture.Web.Controllers
 {
     public class CategoryController : Controller
     {
+        private readonly CategoryApiService _categoryApiService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        public CategoryController(CategoryApiService categoryApiService, ICategoryService categoryService, IMapper mapper)
         {
+            _categoryApiService = categoryApiService;
             _categoryService = categoryService;
             _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryService.GetAllAsync();
+            var categories = await _categoryApiService.GetAllAsync();
             return View(_mapper.Map<IEnumerable<CategoryDto>>(categories));
         }
 
