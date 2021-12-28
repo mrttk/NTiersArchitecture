@@ -14,6 +14,7 @@ using NTiersArchitecture.Data;
 using NTiersArchitecture.Data.Repositories;
 using NTiersArchitecture.Data.UnitOfWorks;
 using NTiersArchitecture.Service.Services;
+using NTiersArchitecture.Web.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace NTiersArchitecture.Web
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped<NotFoundFilter>();
+            services.AddScoped<CategoryNotFoundFilter>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
