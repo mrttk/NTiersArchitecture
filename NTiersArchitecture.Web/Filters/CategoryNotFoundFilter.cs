@@ -1,27 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NTiersArchitecture.Web.DTOs;
-using NTiersArchitecture.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NTiersArchitecture.Web.ApiServices;
 
 namespace NTiersArchitecture.Web.Filters
 {
     public class CategoryNotFoundFilter : ActionFilterAttribute
     {
-        private readonly ICategoryService _categoryService;
+        private readonly CategoryApiService _categoryApiService;
 
-        public CategoryNotFoundFilter(ICategoryService productService)
+        public CategoryNotFoundFilter(CategoryApiService categoryApiService)
         {
-            _categoryService = productService;
+            _categoryApiService = categoryApiService;
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             int id = (int)context.ActionArguments.Values.FirstOrDefault();
-            var product = await _categoryService.GetByIdAsync(id);
+            var product = await _categoryApiService.GetByIdAsync(id);
 
             if (product != null)
             {

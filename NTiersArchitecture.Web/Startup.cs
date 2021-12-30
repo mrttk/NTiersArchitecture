@@ -2,17 +2,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NTiersArchitecture.Core.Repositories;
-using NTiersArchitecture.Core.Services;
-using NTiersArchitecture.Core.UnitOfWork;
-using NTiersArchitecture.Data;
-using NTiersArchitecture.Data.Repositories;
-using NTiersArchitecture.Data.UnitOfWorks;
-using NTiersArchitecture.Service.Services;
 using NTiersArchitecture.Web.ApiServices;
 using NTiersArchitecture.Web.Filters;
 using System;
@@ -34,15 +26,6 @@ namespace NTiersArchitecture.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration["ConnectionStrings:SqlServerConnection"].ToString(),
-                        opt =>
-                        {
-                            opt.MigrationsAssembly("NTiersArchitecture.Data");
-                        });
-            });
-
             services.AddHttpClient<CategoryApiService>(options => {
                 options.BaseAddress = new Uri(Configuration["baseUrl"]);
             });
@@ -50,14 +33,6 @@ namespace NTiersArchitecture.Web
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<CategoryNotFoundFilter>();
-
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IService<>), typeof(Service<>));
-
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IProductService, ProductService>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllers();
             services.Configure<ApiBehaviorOptions>(options =>
             {
