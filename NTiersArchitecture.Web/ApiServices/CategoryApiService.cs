@@ -80,5 +80,19 @@ namespace NTiersArchitecture.Web.ApiServices
                 return false;
             }
         }
+
+        public async Task<bool> Delete(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"category/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
