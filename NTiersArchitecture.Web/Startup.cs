@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NTiersArchitecture.API.Filters;
 using NTiersArchitecture.Core.Repositories;
 using NTiersArchitecture.Core.Services;
 using NTiersArchitecture.Core.UnitOfWork;

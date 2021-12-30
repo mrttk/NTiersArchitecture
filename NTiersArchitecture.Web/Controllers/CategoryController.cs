@@ -46,15 +46,15 @@ namespace NTiersArchitecture.Web.Controllers
         [ServiceFilter(typeof(CategoryNotFoundFilter))]
         public async Task<IActionResult> Update(int id)
         {
-            var category = await _categoryService.GetByIdAsync(id);
+            var category = await _categoryApiService.GetByIdAsync(id);
 
-            return View();
+            return View(_mapper.Map<CategoryDto>(category));
         }
 
         [HttpPost]
-        public IActionResult Update(CategoryDto categoryDto)
+        public async Task<IActionResult> Update(CategoryDto categoryDto)
         {
-            _categoryService.Update(_mapper.Map<Category>(categoryDto));
+            await _categoryApiService.Update(categoryDto);
 
             return RedirectToAction("Index");
         }

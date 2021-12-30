@@ -33,9 +33,9 @@ namespace NTiersArchitecture.Web.ApiServices
             return categoryDtos;
         }
 
-        public async Task<CategoryDto> AddAsync (CategoryDto categoryDto)
+        public async Task<CategoryDto> AddAsync(CategoryDto categoryDto)
         {
-            var stringContent = new StringContent(JsonConvert.SerializeObject(categoryDto),Encoding.UTF8,"application/json");
+            var stringContent = new StringContent(JsonConvert.SerializeObject(categoryDto), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync("category", stringContent);
 
@@ -48,6 +48,36 @@ namespace NTiersArchitecture.Web.ApiServices
             else
             {
                 return null;
+            }
+        }
+
+        public async Task<CategoryDto> GetByIdAsync(int id)
+        {
+            var response = await _httpClient.GetAsync($"category/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<CategoryDto>(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> Update(CategoryDto categoryDto)
+        {
+            var stringContext = new StringContent(JsonConvert.SerializeObject(categoryDto), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync("category", stringContext);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
